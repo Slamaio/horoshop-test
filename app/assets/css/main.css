@@ -1,1 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Unbounded:wght@200..900&display=swap');
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Roboto', sans-serif;
+
+  --color-white: #ffffff;
+  --color-black: #222222;
+  --color-gray: #2c3d39;
+  --color-sidebar: #627b7a;
+
+  --color-active: #418af2;
+  --color-active-hover: #2c70d1;
+}
