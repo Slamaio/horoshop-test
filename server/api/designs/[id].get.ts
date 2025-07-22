@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
+  const id = Number(getRouterParam(event, 'id'))
 
   const storage = useStorage<Design[]>('data')
   const all = (await storage.getItem('designs')) || []

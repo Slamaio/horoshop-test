@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
+  const id = Number(getRouterParam(event, 'id'))
 
   const storage = useStorage<Design[]>('data')
   const designs = (await storage.getItem('designs')) || []
@@ -11,6 +11,6 @@ export default defineEventHandler(async (event) => {
 
   designs.splice(index, 1)
   await storage.setItem('designs', designs)
-  
+
   return { success: true }
 })

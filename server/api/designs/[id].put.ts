@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
+  const id = Number(getRouterParam(event, 'id'))
   const body = await readBody<Partial<Design>>(event)
 
   const storage = useStorage<Design[]>('data')
