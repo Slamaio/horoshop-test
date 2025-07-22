@@ -6,7 +6,7 @@ const { data } = await useFetch(`/api/designs/${id}`, {
   method: 'GET',
 })
 
-const { formData, errors, saveDesign, deleteDesign } = useDesignForm(data.value)
+const { formData, errors, saveDesign, deleteDesign, clearFieldError } = useDesignForm(data.value)
 
 // watchEffect(() => {
 //   if (data.value) {
@@ -21,6 +21,10 @@ async function handleSave() {
 async function handleDelete() {
   await deleteDesign()
 }
+
+function handleClearFieldError(fieldName: string) {
+  clearFieldError(fieldName)
+}
 </script>
 
 <template>
@@ -30,6 +34,7 @@ async function handleDelete() {
     show-delete-button
     @save="handleSave"
     @delete="handleDelete"
+    @clear-field-error="handleClearFieldError"
   />
 </template>
 

@@ -10,9 +10,19 @@ export function useDesignForm(initialData?: Partial<DesignDTO>) {
 
   const errors = ref<Record<string, string>>({})
 
+  function clearFieldError(fieldName: string) {
+    if (errors.value[fieldName]) {
+      delete errors.value[fieldName]
+    }
+  }
+
+  function clearAllErrors() {
+    errors.value = {}
+  }
+
   async function saveDesign(id: number | string | null = null) {
     try {
-      errors.value = {}
+      clearAllErrors()
 
       if (id !== null) {
         await $fetch(`/api/designs/${id}`, {
@@ -42,7 +52,7 @@ export function useDesignForm(initialData?: Partial<DesignDTO>) {
 
   async function deleteDesign() {
     try {
-      errors.value = {}
+      clearAllErrors()
 
       await $fetch(`/api/designs/${formData.id}`, {
         method: 'DELETE',
@@ -65,5 +75,7 @@ export function useDesignForm(initialData?: Partial<DesignDTO>) {
     errors,
     saveDesign,
     deleteDesign,
+    clearFieldError,
+    clearAllErrors,
   }
 }

@@ -10,9 +10,14 @@ defineProps({
 const emit = defineEmits<{
   save: []
   delete: []
+  clearFieldError: [fieldName: string]
 }>()
 
 const formDataModel = defineModel<DesignDTO>({ required: true })
+
+function handleClearFieldError(fieldName: string) {
+  emit('clearFieldError', fieldName)
+}
 </script>
 
 <template>
@@ -50,6 +55,7 @@ const formDataModel = defineModel<DesignDTO>({ required: true })
           v-model="formDataModel"
           :errors="errors || {}"
           class="max-w-[600px]"
+          @clear-field-error="handleClearFieldError"
         />
       </main>
     </div>

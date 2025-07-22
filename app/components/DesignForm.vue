@@ -8,6 +8,11 @@ defineProps({
   },
 })
 
+// Used emits for simplicity, but store like Pinia or Vuex is preffered for larger applications
+const emit = defineEmits<{
+  clearFieldError: [fieldName: string]
+}>()
+
 const formData = defineModel({
   type: Object as PropType<DesignDTO>,
   default: () => ({
@@ -17,6 +22,22 @@ const formData = defineModel({
     images: [],
   }),
 })
+
+watch(() => formData.value.id, () => {
+  emit('clearFieldError', 'id')
+})
+
+watch(() => formData.value.name, () => {
+  emit('clearFieldError', 'name')
+})
+
+watch(() => formData.value.url, () => {
+  emit('clearFieldError', 'url')
+})
+
+watch(() => formData.value.images, () => {
+  emit('clearFieldError', 'images')
+}, { deep: true })
 
 watchDebounced(
   () => formData.value.id,
