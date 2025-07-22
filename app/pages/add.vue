@@ -1,49 +1,16 @@
 <script lang="ts" setup>
-const formData = reactive<DesignDTO>({
-  id: '',
-  name: '',
-  url: '',
-  images: [],
-  published: false,
-})
+const { formData, saveDesign } = useDesignForm()
 
-async function saveDesign() {
-  try {
-    await $fetch('/api/designs', {
-      method: 'POST',
-      body: formData,
-    })
-
-    navigateTo('/')
-  }
-  catch (error) {
-    console.error('Error saving design:', error)
-  }
+async function handleSave() {
+  await saveDesign(false)
 }
 </script>
 
 <template>
-  <div class="px-8 py-6 bg-white">
-    <AppHeader>
-      <InputSwitch
-        v-model="formData.published"
-        :label="formData.published ? 'Опублікований' : 'Неопублікований'"
-      />
-
-      <template #actions>
-        <ButtonPrimary @click="saveDesign">
-          Зберегти і вийти
-        </ButtonPrimary>
-      </template>
-    </AppHeader>
-
-    <main>
-      <DesignForm
-        v-model="formData"
-        class="max-w-[600px]"
-      />
-    </main>
-  </div>
+  <DesignPageWrapper
+    v-model:form-data="formData"
+    @save="handleSave"
+  />
 </template>
 
 <style lang="scss" scoped></style>

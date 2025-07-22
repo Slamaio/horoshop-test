@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { RouteLocationRaw } from 'vue-router';
+import type { RouteLocationRaw } from 'vue-router'
 
 defineProps({
   to: [String, Object] as PropType<string | RouteLocationRaw>,
@@ -28,7 +28,7 @@ defineProps({
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
+
   outline-width: 1px;
   outline-style: solid;
   outline-offset: -1px;

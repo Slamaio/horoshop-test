@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage<Design[]>('data')
   const designs = (await storage.getItem('designs')) || []
 
-  const index = designs.findIndex((d) => d.id === id)
+  const index = designs.findIndex(d => d.id === id)
   if (index === -1) {
     throw createError({ statusCode: 404, statusMessage: 'Design not found' })
   }

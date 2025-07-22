@@ -1,31 +1,7 @@
 <script lang="ts" setup>
 import { useInfiniteScroll } from '@vueuse/core'
 
-const { data } = await useFetch('/api/designs', {
-  method: 'GET',
-  query: {
-    page: 1,
-  },
-})
-
-const designs = ref<Design[]>(data.value?.data || [])
-
-async function loadMore() {
-  if (!data.value) {
-    return
-  }
-
-  const { data: newData } = await $fetch('/api/designs', {
-    method: 'GET',
-    query: {
-      page: data.value.page += 1,
-    },
-  })
-
-  if (newData) {
-    designs.value.push(...newData)
-  }
-}
+const { designs, loadMore, canLoadMore } = await useDesignList()
 
 const el = useTemplateRef<HTMLElement>('el')
 useInfiniteScroll(
@@ -35,9 +11,7 @@ useInfiniteScroll(
   },
   {
     distance: 700,
-    canLoadMore: () => {
-      return designs.value.length < (data.value?.total || 0)
-    },
+    canLoadMore,
   },
 )
 </script>
