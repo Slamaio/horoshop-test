@@ -12,7 +12,7 @@
 .button--secondary {
   color: var(--color-black);
   background-color: var(--color-white);
-  outline-color: rgba(0, 0, 0, 0.2);
+  outline-color: var(--color-outline);
 
   &:hover {
     outline-color: rgba(0, 0, 0, 0.35);

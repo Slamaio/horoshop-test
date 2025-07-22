@@ -17,7 +17,7 @@ defineProps({
 
 <template>
   <div class="flex flex-col gap-4 transition-transform duration-150 hover:scale-105">
-    <img :src="image" alt="" class="rounded-sm">
+    <img :src="image" alt="" class="rounded-sm aspect-[3/4] object-cover">
 
     <div class="flex items-center gap-2">
       <span class="h-4 px-1 text-black bg-white rounded-lg text-[11px]/[18px] flex items-center justify-center">

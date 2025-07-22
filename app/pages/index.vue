@@ -9,7 +9,7 @@ const { data } = await useFetch('/api/designs', {
 
 const designs = computed(() => {
   const items = data.value?.data || []
-  return items.sort((a, b) => Number(b.id) - Number(a.id))
+  return items.sort((a, b) => b.id - a.id)
 })
 
 async function initDesigns() {
@@ -43,11 +43,6 @@ async function initDesigns() {
     },
   })
 }
-
-onMounted(async () => {
-  await nextTick()
-  await initDesigns()
-})
 </script>
 
 <template>
@@ -63,6 +58,10 @@ onMounted(async () => {
         </ButtonPrimary>
       </template>
     </AppHeader>
+
+    <!-- <button @click="initDesigns">
+      Ініціалізувати дизайни
+    </button> -->
 
     <main class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-5 gap-y-10">
       <NuxtLink v-for="design in designs" :key="design.id" :to="`/edit/${design.id}`">

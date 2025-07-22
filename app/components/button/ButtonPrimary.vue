@@ -12,7 +12,7 @@
 .button--primary {
   color: var(--color-white);
   background-color: var(--color-active);
-  outline-color: rgba(0, 0, 0, 0.2);
+  outline-color: var(--color-outline);
 
   &:hover,
   &:active {

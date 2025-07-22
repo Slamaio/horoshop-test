@@ -4,6 +4,18 @@ const id = route.params.id?.toString()
 const { data } = await useFetch(`/api/designs/${id}`, {
   method: 'GET',
 })
+
+async function deleteDesign() {
+  try {
+    await $fetch(`/api/designs/${id}`, {
+      method: 'DELETE',
+    })
+    navigateTo('/')
+  }
+  catch (error) {
+    console.error('Failed to delete design:', error)
+  }
+}
 </script>
 
 <template>
@@ -12,7 +24,10 @@ const { data } = await useFetch(`/api/designs/${id}`, {
       <InputSwitch />
 
       <template #actions>
-        <ButtonSecondary class="button--delete">
+        <ButtonSecondary
+          class="button--delete"
+          @click="deleteDesign"
+        >
           Видалити
         </ButtonSecondary>
 
