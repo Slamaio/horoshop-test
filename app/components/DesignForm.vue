@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import { watchDebounced } from '@vueuse/core'
 
+defineProps({
+  errors: {
+    type: Object as PropType<Record<string, string>>,
+    default: () => ({}),
+  },
+})
+
 const formData = defineModel({
   type: Object as PropType<DesignDTO>,
   default: () => ({
@@ -28,6 +35,7 @@ watchDebounced(
     <InputMediaFile
       v-model="formData.images"
       accept="image/*"
+      :error="errors.images"
     />
 
     <div class="flex flex-col gap-4 sm:gap-6">
@@ -37,17 +45,20 @@ watchDebounced(
           placeholder="###"
           type="number"
           class="w-full sm:w-20"
+          :error="errors.id"
         />
         <InputTextField
           v-model="formData.name"
           placeholder="Назва дизайну"
           class="grow"
+          :error="errors.name"
         />
       </div>
 
       <InputTextField
         v-model="formData.url"
         placeholder="https://design###.horoshop.ua/"
+        :error="errors.url"
       />
     </div>
   </form>

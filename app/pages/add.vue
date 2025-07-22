@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-const { formData, saveDesign } = useDesignForm()
+const { formData, errors, saveDesign } = useDesignForm()
 
 async function handleSave() {
-  await saveDesign(false)
+  await saveDesign()
 }
 </script>
 
 <template>
   <DesignPageWrapper
-    v-model:form-data="formData"
+    v-model="formData"
+    :errors="errors"
     @save="handleSave"
   />
 </template>

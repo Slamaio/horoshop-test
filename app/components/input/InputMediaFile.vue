@@ -196,8 +196,10 @@ async function onFileChange(event: Event) {
   }
 }
 
-.file-upload__error-text {
-  color: var(--color-red);
+.file-upload__error {
+  color: var(--color-error);
+  font-size: 0.75rem;
+  line-height: 1;
 }
 
 .list-move, /* apply transition to moving elements */

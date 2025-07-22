@@ -84,6 +84,12 @@ const model = defineModel<string | number>()
   }
 }
 
+.field__error {
+  color: var(--color-error);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
 // Transitions
 
 .field__label,

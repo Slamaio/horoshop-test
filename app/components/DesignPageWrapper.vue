@@ -1,17 +1,18 @@
 <script lang="ts" setup>
-interface Props {
-  formData: DesignDTO
-  showDeleteButton?: boolean
-}
-
-defineProps<Props>()
+defineProps({
+  showDeleteButton: Boolean,
+  errors: {
+    type: Object as PropType<Record<string, string>>,
+    default: () => ({}),
+  },
+})
 
 const emit = defineEmits<{
   save: []
   delete: []
 }>()
 
-const formDataModel = defineModel<DesignDTO>('formData', { required: true })
+const formDataModel = defineModel<DesignDTO>({ required: true })
 </script>
 
 <template>
@@ -47,6 +48,7 @@ const formDataModel = defineModel<DesignDTO>('formData', { required: true })
       <main>
         <DesignForm
           v-model="formDataModel"
+          :errors="errors || {}"
           class="max-w-[600px]"
         />
       </main>

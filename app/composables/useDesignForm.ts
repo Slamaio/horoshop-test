@@ -8,10 +8,14 @@ export function useDesignForm(initialData?: Partial<DesignDTO>) {
     ...initialData,
   })
 
-  async function saveDesign(isEdit = false) {
+  const errors = ref<Record<string, string>>({})
+
+  async function saveDesign(id: number | string | null = null) {
     try {
-      if (isEdit) {
-        await $fetch(`/api/designs/${formData.id}`, {
+      errors.value = {}
+
+      if (id !== null) {
+        await $fetch(`/api/designs/${id}`, {
           method: 'PUT',
           body: formData,
         })
@@ -25,27 +29,40 @@ export function useDesignForm(initialData?: Partial<DesignDTO>) {
 
       await navigateTo('/')
     }
-    catch (error) {
-      console.error(`Error ${isEdit ? 'updating' : 'creating'} design:`, error)
+    catch (error: any) {
+      console.error(`Error ${id !== null ? 'updating' : 'creating'} design:`, error)
+
+      if (error?.data?.data && typeof error.data.data === 'object') {
+        errors.value = error.data.data
+      }
+
       throw error
     }
   }
 
   async function deleteDesign() {
     try {
+      errors.value = {}
+
       await $fetch(`/api/designs/${formData.id}`, {
         method: 'DELETE',
       })
       await navigateTo('/')
     }
-    catch (error) {
+    catch (error: any) {
       console.error('Failed to delete design:', error)
+
+      if (error?.data?.data && typeof error.data.data === 'object') {
+        errors.value = error.data.data
+      }
+
       throw error
     }
   }
 
   return {
     formData,
+    errors,
     saveDesign,
     deleteDesign,
   }

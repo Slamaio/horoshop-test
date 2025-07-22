@@ -6,7 +6,7 @@ const { data } = await useFetch(`/api/designs/${id}`, {
   method: 'GET',
 })
 
-const { formData, saveDesign, deleteDesign } = useDesignForm(data.value)
+const { formData, errors, saveDesign, deleteDesign } = useDesignForm(data.value)
 
 // watchEffect(() => {
 //   if (data.value) {
@@ -15,7 +15,7 @@ const { formData, saveDesign, deleteDesign } = useDesignForm(data.value)
 // })
 
 async function handleSave() {
-  await saveDesign(true)
+  await saveDesign(id)
 }
 
 async function handleDelete() {
@@ -25,7 +25,8 @@ async function handleDelete() {
 
 <template>
   <DesignPageWrapper
-    v-model:form-data="formData"
+    v-model="formData"
+    :errors="errors"
     show-delete-button
     @save="handleSave"
     @delete="handleDelete"
