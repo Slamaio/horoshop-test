@@ -15,34 +15,42 @@ const formDataModel = defineModel<DesignDTO>('formData', { required: true })
 </script>
 
 <template>
-  <div class="px-8 py-6 bg-white">
-    <AppHeader>
-      <InputSwitch
-        v-model="formDataModel.published"
-        :label="formDataModel.published ? 'Опублікований' : 'Неопублікований'"
-      />
+  <div class="px-8 py-6 bg-white flex max-sm:flex-col gap-8 sm:gap-16 flex-wrap">
+    <aside>
+      <NuxtLink to="/">
+        <IconArrow class="text-black size-6 hover:scale-125 transition-transform" />
+      </NuxtLink>
+    </aside>
 
-      <template #actions>
-        <ButtonSecondary
-          v-if="showDeleteButton"
-          class="button--delete"
-          @click="emit('delete')"
-        >
-          Видалити
-        </ButtonSecondary>
+    <div class="grow">
+      <AppHeader>
+        <InputSwitch
+          v-model="formDataModel.published"
+          :label="formDataModel.published ? 'Опублікований' : 'Неопублікований'"
+        />
 
-        <ButtonPrimary @click="emit('save')">
-          Зберегти і вийти
-        </ButtonPrimary>
-      </template>
-    </AppHeader>
+        <template #actions>
+          <ButtonSecondary
+            v-if="showDeleteButton"
+            class="button--delete"
+            @click="emit('delete')"
+          >
+            Видалити
+          </ButtonSecondary>
 
-    <main>
-      <DesignForm
-        v-model="formDataModel"
-        class="max-w-[600px]"
-      />
-    </main>
+          <ButtonPrimary @click="emit('save')">
+            Зберегти і вийти
+          </ButtonPrimary>
+        </template>
+      </AppHeader>
+
+      <main>
+        <DesignForm
+          v-model="formDataModel"
+          class="max-w-[600px]"
+        />
+      </main>
+    </div>
   </div>
 </template>
 
