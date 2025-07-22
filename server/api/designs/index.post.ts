@@ -1,6 +1,17 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody<Partial<Design>>(event)
 
+  if (typeof body.id !== 'number') {
+    const parsedId = Number(body.id)
+    if (Number.isNaN(parsedId)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'ID must be a number',
+      })
+    }
+    body.id = parsedId
+  }
+
   if (!body.id || !body.name || !body.url || !body.images?.length) {
     throw createError({
       statusCode: 400,
@@ -9,9 +20,9 @@ export default defineEventHandler(async (event) => {
   }
 
   const storage = useStorage<Design[]>('data')
-  const current = (await storage.getItem('designs')) || []
+  const designs = (await storage.getItem('designs')) || []
 
-  const existing = current.find(d => d.id === body.id)
+  const existing = designs.find(d => d.id === body.id)
   if (existing) {
     throw createError({
       statusCode: 400,
@@ -38,7 +49,7 @@ export default defineEventHandler(async (event) => {
     updatedAt: new Date().toISOString(),
   }
 
-  await storage.setItem('designs', [...current, newDesign])
+  await storage.setItem('designs', [...designs, newDesign])
 
   return newDesign
 })

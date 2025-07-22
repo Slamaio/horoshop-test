@@ -45,7 +45,7 @@ async function onFileChange(event: Event) {
     class="file-upload"
     :class="{
       'file-upload--has-files': model.length > 0,
-      'file-upload--error': error !== '',
+      'file-upload--error': error,
     }"
   >
     <div class="file-upload__content">

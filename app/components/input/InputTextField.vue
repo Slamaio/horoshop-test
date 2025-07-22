@@ -9,10 +9,7 @@ defineProps({
   error: String,
 })
 
-const model = defineModel({
-  type: String,
-  default: '',
-})
+const model = defineModel<string | number>()
 </script>
 
 <template>

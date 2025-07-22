@@ -1,48 +1,45 @@
 <script lang="ts" setup>
+import { useInfiniteScroll } from '@vueuse/core'
+
 const { data } = await useFetch('/api/designs', {
   method: 'GET',
   query: {
     page: 1,
-    limit: 10,
   },
 })
 
-const designs = computed(() => {
-  const items = data.value?.data || []
-  return items.sort((a, b) => b.id - a.id)
-})
+const designs = ref<Design[]>(data.value?.data || [])
 
-async function initDesigns() {
-  await useFetch('/api/designs', {
-    method: 'POST',
-    body: {
-      id: 1,
-      name: 'New Design',
-      url: 'https://example.com/design',
-      images: ['https://placehold.co/300x400'],
+async function loadMore() {
+  if (!data.value) {
+    return
+  }
+
+  const { data: newData } = await $fetch('/api/designs', {
+    method: 'GET',
+    query: {
+      page: data.value.page += 1,
     },
   })
 
-  await useFetch('/api/designs', {
-    method: 'POST',
-    body: {
-      id: 2,
-      name: 'New Design',
-      url: 'https://example.com/design',
-      images: ['https://placehold.co/300x400'],
-    },
-  })
-
-  await useFetch('/api/designs', {
-    method: 'POST',
-    body: {
-      id: 3,
-      name: 'New Design',
-      url: 'https://example.com/design',
-      images: ['https://placehold.co/300x400'],
-    },
-  })
+  if (newData) {
+    designs.value.push(...newData)
+  }
 }
+
+const el = useTemplateRef<HTMLElement>('el')
+useInfiniteScroll(
+  document,
+  async () => {
+    await loadMore()
+  },
+  {
+    distance: 700,
+    canLoadMore: () => {
+      return designs.value.length < (data.value?.total || 0)
+    },
+  },
+)
 </script>
 
 <template>
@@ -59,12 +56,23 @@ async function initDesigns() {
       </template>
     </AppHeader>
 
-    <!-- <button @click="initDesigns">
-      Ініціалізувати дизайни
-    </button> -->
+    <main
+      ref="el"
+      class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-5 gap-y-10"
+    >
+      <div
+        v-if="designs.length === 0"
+        class="col-span-full text-center text-gray-500"
+      >
+        Немає жодного дизайну
+      </div>
 
-    <main class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-5 gap-y-10">
-      <NuxtLink v-for="design in designs" :key="design.id" :to="`/edit/${design.id}`">
+      <NuxtLink
+        v-for="design in designs"
+        :key="design.id"
+        :to="`/edit/${design.id}`"
+        :class="{ 'opacity-50': !design.published }"
+      >
         <DesignListItem
           :id="design.id"
           :image="design.images[0] || 'https://placehold.co/300x400?text=No+Image'"

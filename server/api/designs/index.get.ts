@@ -7,7 +7,9 @@ export default defineEventHandler(async (event) => {
   const designs = (await storage.getItem('designs')) || []
 
   const start = (page - 1) * limit
-  const paginated = designs.slice(start, start + limit)
+  const paginated = designs
+    .sort((a, b) => b.id - a.id) // Sort by ID in descending order
+    .slice(start, start + limit)
 
   return {
     page,
