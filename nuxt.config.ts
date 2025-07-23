@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   $production: {
     nitro: {
       storage: {
-        data: { driver: 'vercelKV' },
+        data: { driver: 'vercelBlob' },
       },
     },
   },
