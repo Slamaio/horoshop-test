@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const page = Number.parseInt(query.page as string || '1')
-  const limit = Number.parseInt(query.limit as string || '10')
+  const limit = Number.parseInt(query.limit as string || '20')
 
   const storage = useStorage<Design[]>('data')
   const designs = (await storage.getItem('designs')) || []

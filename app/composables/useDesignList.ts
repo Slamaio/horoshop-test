@@ -1,8 +1,9 @@
-export async function useDesignList() {
+export async function useDesignList(limit?: number) {
   const { data } = await useFetch('/api/designs', {
     method: 'GET',
     query: {
       page: 1,
+      limit,
     },
   })
 
@@ -18,6 +19,7 @@ export async function useDesignList() {
       method: 'GET',
       query: {
         page: paginationData.value.page + 1,
+        limit,
       },
     })
 
