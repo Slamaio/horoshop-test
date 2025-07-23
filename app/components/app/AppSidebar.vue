@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <aside class="fixed w-10 h-full p-2 bg-sidebar">
+  <aside class="fixed w-10 h-dvh p-2 bg-sidebar">
     <AppLogo />
   </aside>
 </template>
