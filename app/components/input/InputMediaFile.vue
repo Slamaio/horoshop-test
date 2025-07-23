@@ -162,9 +162,14 @@ async function onFileChange(event: Event) {
   height: fit-content;
   min-height: 32px;
   border-radius: 3px;
+  overflow: hidden;
   outline: 1px solid var(--color-outline);
   outline-offset: -1px;
   position: relative;
+
+  &:hover {
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .file-upload__remove-button {
@@ -183,6 +188,10 @@ async function onFileChange(event: Event) {
   background-color: rgba(0, 0, 0, 0.5);
   color: var(--color-gray-light);
   cursor: pointer;
+
+  &:not(:where(.file-upload__item:hover *)) {
+    visibility: hidden;
+  }
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.7);
